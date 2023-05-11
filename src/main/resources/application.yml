@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: dbc:h2:tcp://localhost/~/visitor
+    url: jdbc:h2:tcp://localhost/~/visitor
     driver-class-name: org.h2.Driver
     username: root
     password:
