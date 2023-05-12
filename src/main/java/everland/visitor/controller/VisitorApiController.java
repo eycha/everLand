@@ -6,6 +6,7 @@ import everland.visitor.service.VisitorEnrollmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,12 +24,19 @@ public class VisitorApiController {
         return visitorRepository.findAll();
     }
 
-    @PostMapping("/visitors/enroll")
+        @PostMapping("/visitors/e")
     Visitor visitorCount(@RequestBody Visitor enollment) {
-        visitorEnrollmentService.currentDate();
         return visitorRepository.save(enollment);
-
     }
+//    @PostMapping("/visitors/e")
+//    Visitor date(@RequestBody Visitor date) {
+//        return visitorEnrollmentService.visitorEnrollment(date.getId(), date.getCurrentTime() );
+//    }
+
+
+
+
+
 
 
 

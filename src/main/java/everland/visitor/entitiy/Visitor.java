@@ -3,14 +3,15 @@ package everland.visitor.entitiy;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.MetaValue;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Getter @Setter
+@Table(name = "visitors")
 public class Visitor {
 
     @Id
@@ -18,9 +19,17 @@ public class Visitor {
     private Integer id;
     private String groupName;
     private int groupMembers;
+    public LocalDateTime time;
 
-    public Integer id() {
-        return getId();
+    public Integer getId() {
+        return id;
+    }
+
+    public LocalDateTime getCurrentTime() {
+        return time;
+    }
+    public void setCurrentTime(LocalDateTime time) {
+        this.time = time;
     }
 
 
