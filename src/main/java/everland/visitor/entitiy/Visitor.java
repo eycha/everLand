@@ -3,7 +3,9 @@ package everland.visitor.entitiy;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.MetaValue;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,15 +21,17 @@ public class Visitor {
     private Integer id;
     private String groupName;
     private int groupMembers;
+    @Comment("날짜")
     public LocalDateTime time;
+
 
     public Integer getId() {
         return id;
     }
 
-    public LocalDateTime getCurrentTime() {
-        return time;
-    }
+//    public LocalDateTime getCurrentTime() {
+//        return time;
+//    }
     public void setCurrentTime(LocalDateTime time) {
         this.time = time;
     }
