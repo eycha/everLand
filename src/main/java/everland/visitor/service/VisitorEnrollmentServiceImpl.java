@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Service
 @Transactional
-public class VisitorEnrollmentService {
+public class VisitorEnrollmentServiceImpl {
     @Autowired
     private VisitorRepository visitorRepository;
 
@@ -21,7 +21,7 @@ public class VisitorEnrollmentService {
 
         Visitor visitor = new Visitor();
 //        visitor.setCurrentTime(time);
-        System.out.println("시간이다!!!!!!!!!!!"+time);
+
 
         return visitorRepository.save(visitor);
     }

@@ -2,12 +2,10 @@ package everland.visitor.controller;
 
 import everland.visitor.entitiy.Visitor;
 import everland.visitor.repository.VisitorRepository;
-import everland.visitor.service.VisitorEnrollmentService;
-import net.bytebuddy.asm.Advice;
+import everland.visitor.service.VisitorEnrollmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -17,7 +15,7 @@ public class VisitorApiController {
     @Autowired
     private VisitorRepository visitorRepository;
     @Autowired
-    private VisitorEnrollmentService visitorEnrollmentService;
+    private VisitorEnrollmentServiceImpl visitorEnrollmentServiceImpl;
 
 
     @GetMapping("/visitors")
@@ -25,22 +23,28 @@ public class VisitorApiController {
         return visitorRepository.findAll();
     }
 
-    @PostMapping("/visitors/e")
+    @PostMapping("/visitors/enoroll")
     Visitor visitorCount(@RequestBody Visitor enollment) {
 //        enollment.setCurrentTime(LocalDateTime.now());
         return visitorRepository.save(enollment);
     }
-//    @PostMapping("/visitors/e")
-//    Visitor date(@RequestBody Visitor date) {
-//        return visitorEnrollmentService.visitorEnrollment(date.getId(), date.getCurrentTime() );
-//    }
 
+    @PutMapping("/visitors/{id}")
+    Visitor replaceList(@RequestBody Visitor newVisitor, @PathVariable Integer id) {
+        return visitorRepository.findById(id)
+                .map(visitor -> {
+                    visitor.setGroupName(newVisitor.getGroupName());
+                    visitor.setGroupMembers(newVisitor.getGroupMembers());
+                    return visitorRepository.save(visitor);
+                })
+                .orElseGet(() -> {
+                    newVisitor.setId(id);
+                    return visitorRepository.save(newVisitor);
+                });
+    }
 
-
-
-
-
-
-
-
+    @DeleteMapping("/visitors/{id}")
+    void deleteList(@PathVariable Integer id) {
+        visitorRepository.deleteById(id);
+    }
 }
