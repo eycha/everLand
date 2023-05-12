@@ -27,7 +27,7 @@ public class VisitorApiController {
 
     @PostMapping("/visitors/e")
     Visitor visitorCount(@RequestBody Visitor enollment) {
-        enollment.setCurrentTime(LocalDateTime.now());
+//        enollment.setCurrentTime(LocalDateTime.now());
         return visitorRepository.save(enollment);
     }
 //    @PostMapping("/visitors/e")

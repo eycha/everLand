@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.MetaValue;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @Getter @Setter
 @Table(name = "visitors")
+@EntityListeners(AuditingEntityListener.class)
 public class Visitor {
 
     @Id
@@ -22,7 +24,8 @@ public class Visitor {
     private String groupName;
     private int groupMembers;
     @Comment("날짜")
-    public LocalDateTime time;
+    @CreatedDate
+    private LocalDateTime time;
 
 
     public Integer getId() {
@@ -32,9 +35,9 @@ public class Visitor {
 //    public LocalDateTime getCurrentTime() {
 //        return time;
 //    }
-    public void setCurrentTime(LocalDateTime time) {
-        this.time = time;
-    }
+//    public void setCurrentTime(LocalDateTime time) {
+//        this.time = time;
+//    }
 
 
 }
