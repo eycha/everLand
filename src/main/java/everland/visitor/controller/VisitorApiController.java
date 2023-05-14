@@ -71,5 +71,14 @@ public class VisitorApiController {
                 .sum();
     }
 
+    @GetMapping("/visitors/{date}")
+    Integer sumGroupMembersByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return visitorRepository.sumGroupMembersByDate(date);
+    }
+
+    @GetMapping("/visitors/week/{dayOfWeek}")
+    Integer sumGroupMembersByDayOfWeek(@PathVariable int dayOfWeek) {
+        return visitorRepository.sumGroupMembersByDayOfWeek(dayOfWeek);
+    }
 
 }
