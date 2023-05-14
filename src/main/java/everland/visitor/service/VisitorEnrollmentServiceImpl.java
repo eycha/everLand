@@ -17,12 +17,22 @@ public class VisitorEnrollmentServiceImpl {
     private VisitorRepository visitorRepository;
 
     //현재시간 받아오기
-    public Visitor visitorEnrollment(Integer id, LocalDateTime time)  {
-
-        Visitor visitor = new Visitor();
+//    public Visitor visitorEnrollment(Integer id, LocalDateTime time)  {
+//        Visitor visitor = new Visitor();
 //        visitor.setCurrentTime(time);
+//
+//
+//        return visitorRepository.save(visitor);
+//    }
+
+//    public int countGroups(Integer id) {
+//        Visitor visitor = new Visitor();
+//        visitor.getId();
+//
+//
+//
+//
+//    }
 
 
-        return visitorRepository.save(visitor);
-    }
 }

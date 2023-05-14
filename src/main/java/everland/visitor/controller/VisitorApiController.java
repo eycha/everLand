@@ -47,4 +47,15 @@ public class VisitorApiController {
     void deleteList(@PathVariable Integer id) {
         visitorRepository.deleteById(id);
     }
+
+    @GetMapping("/visitors/group-count")
+    Long countVisitors() {
+        return visitorRepository.countVisitors();
+    }
+
+    @GetMapping("/visitors/members-count")
+    Integer sumGroupMembers() {
+        return visitorRepository.sumGroupMembers();
+    }
+
 }
