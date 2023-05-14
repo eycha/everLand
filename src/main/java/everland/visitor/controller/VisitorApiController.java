@@ -4,8 +4,11 @@ import everland.visitor.entitiy.Visitor;
 import everland.visitor.repository.VisitorRepository;
 import everland.visitor.service.VisitorEnrollmentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -57,5 +60,16 @@ public class VisitorApiController {
     Integer sumGroupMembers() {
         return visitorRepository.sumGroupMembers();
     }
+
+    @GetMapping("/visitors/{date}/{hour}")
+    Integer sumGroupMembersByDateAndHour(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @PathVariable int hour) {
+        LocalDateTime startDateTime = date.atTime(hour, 0);
+        LocalDateTime endDateTime = date.atTime(hour, 59, 59);
+        List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
+        return visitors.stream()
+                .mapToInt(Visitor::getGroupMembers)
+                .sum();
+    }
+
 
 }
