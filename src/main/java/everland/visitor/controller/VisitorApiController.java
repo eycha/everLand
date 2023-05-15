@@ -1,89 +1,64 @@
 package everland.visitor.controller;
 
 import everland.visitor.entitiy.Visitor;
-import everland.visitor.repository.VisitorRepository;
-import everland.visitor.service.VisitorEnrollmentServiceImpl;
+import everland.visitor.service.VisitorCalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class VisitorApiController {
 
     @Autowired
-    private VisitorRepository visitorRepository;
-    @Autowired
-    private VisitorEnrollmentServiceImpl visitorEnrollmentServiceImpl;
-
+    private VisitorCalServiceImpl visitorCalServiceImpl;
 
     @GetMapping("/visitors")
     List<Visitor> visitorList() {
-        return visitorRepository.findAll();
+        return visitorCalServiceImpl.getVisitorList();
     }
 
-    @PostMapping("/visitors/enoroll")
-    Visitor visitorCount(@RequestBody Visitor enollment) {
-//        enollment.setCurrentTime(LocalDateTime.now());
-        return visitorRepository.save(enollment);
+    @PostMapping("/visitors/enroll")
+    Visitor visitorCount(@RequestBody Visitor enrollment) {
+        return visitorCalServiceImpl.enrollVisitor(enrollment);
     }
 
     @PutMapping("/visitors/{id}")
     Visitor replaceList(@RequestBody Visitor newVisitor, @PathVariable Integer id) {
-        return visitorRepository.findById(id)
-                .map(visitor -> {
-                    visitor.setGroupName(newVisitor.getGroupName());
-                    visitor.setGroupMembers(newVisitor.getGroupMembers());
-                    return visitorRepository.save(visitor);
-                })
-                .orElseGet(() -> {
-                    newVisitor.setId(id);
-                    return visitorRepository.save(newVisitor);
-                });
+        return visitorCalServiceImpl.replaceVisitor(id, newVisitor);
     }
 
     @DeleteMapping("/visitors/{id}")
     void deleteList(@PathVariable Integer id) {
-        visitorRepository.deleteById(id);
+        visitorCalServiceImpl.deleteVisitor(id);
     }
 
     @GetMapping("/visitors/group-count")
     Long countVisitors() {
-        return visitorRepository.countVisitors();
+        return visitorCalServiceImpl.countVisitors();
     }
 
     @GetMapping("/visitors/members-count")
     Integer sumGroupMembers() {
-        return visitorRepository.sumGroupMembers();
+        return visitorCalServiceImpl.sumGroupMembers();
     }
 
-    @GetMapping("/visitors/{date}/{hour}")
+    @GetMapping("/visitors/date/{date}/{hour}")
     Integer sumGroupMembersByDateAndHour(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @PathVariable int hour) {
-        LocalDateTime startDateTime = date.atTime(hour, 0);
-        LocalDateTime endDateTime = date.atTime(hour, 59, 59);
-        List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
-        return visitors.stream()
-                .mapToInt(Visitor::getGroupMembers)
-                .sum();
+        return visitorCalServiceImpl.sumGroupMembersByDateAndHour(date, hour);
     }
 
-    @GetMapping("/visitors/{date}")
+    @GetMapping("/visitors/date/{date}")
     Integer sumGroupMembersByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        LocalDateTime startDateTime = date.atTime(0,0, 0);
-        LocalDateTime endDateTime = date.atTime(23, 59, 59);
-        List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
-        return visitors.stream()
-                .mapToInt(Visitor::getGroupMembers)
-                .sum();
+        return visitorCalServiceImpl.sumGroupMembersByDate(date);
     }
 
     @GetMapping("/visitors/week/{dayOfWeek}")
     Integer sumGroupMembersByDayOfWeek(@PathVariable int dayOfWeek) {
-        return visitorRepository.sumGroupMembersByDayOfWeek(dayOfWeek);
+        return visitorCalServiceImpl.sumGroupMembersByDayOfWeek(dayOfWeek);
     }
 
 }

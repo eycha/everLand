@@ -28,16 +28,5 @@ public class Visitor {
     private LocalDateTime time;
 
 
-    public Integer getId() {
-        return id;
-    }
-
-//    public LocalDateTime getCurrentTime() {
-//        return time;
-//    }
-//    public void setCurrentTime(LocalDateTime time) {
-//        this.time = time;
-//    }
-
 
 }
