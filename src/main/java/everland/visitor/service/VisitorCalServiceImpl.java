@@ -49,8 +49,8 @@ public class VisitorCalServiceImpl implements VisitorCalService{
     }
 
     @Override
-    public Long countVisitors() {
-        return visitorRepository.count();
+    public Integer countVisitors() {
+        return visitorRepository.countVisitors();
     }
 
     @Override

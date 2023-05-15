@@ -12,7 +12,7 @@ import java.util.List;
 public interface VisitorRepository extends JpaRepository<Visitor,Integer> {
 
     @Query("SELECT COUNT(v.id) FROM Visitor v")
-    Long countVisitors();
+    Integer countVisitors();
 
     @Query("SELECT SUM(v.groupMembers) FROM Visitor v")
     Integer sumGroupMembers();

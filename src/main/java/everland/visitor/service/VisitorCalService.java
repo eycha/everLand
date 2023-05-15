@@ -14,7 +14,7 @@ public interface VisitorCalService {
 
     void deleteVisitor(Integer id);
 
-    Long countVisitors();
+    Integer countVisitors();
 
     Integer sumGroupMembers();
 

@@ -37,7 +37,7 @@ public class VisitorApiController {
     }
 
     @GetMapping("/visitors/group-count")
-    Long countVisitors() {
+    Integer countVisitors() {
         return visitorCalServiceImpl.countVisitors();
     }
 
