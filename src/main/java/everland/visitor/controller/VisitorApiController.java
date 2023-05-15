@@ -73,7 +73,12 @@ public class VisitorApiController {
 
     @GetMapping("/visitors/{date}")
     Integer sumGroupMembersByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return visitorRepository.sumGroupMembersByDate(date);
+        LocalDateTime startDateTime = date.atTime(0,0, 0);
+        LocalDateTime endDateTime = date.atTime(23, 59, 59);
+        List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
+        return visitors.stream()
+                .mapToInt(Visitor::getGroupMembers)
+                .sum();
     }
 
     @GetMapping("/visitors/week/{dayOfWeek}")

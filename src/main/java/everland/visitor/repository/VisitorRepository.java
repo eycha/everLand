@@ -24,8 +24,8 @@ public interface VisitorRepository extends JpaRepository<Visitor,Integer> {
 
     List<Visitor> findByTimeBetween(LocalDateTime startDateTime, LocalDateTime endDateTime);
 
-    @Query("SELECT SUM(v.groupMembers) FROM Visitor v WHERE DATE(v.time) = :date")
-    Integer sumGroupMembersByDate(@Param("date") LocalDate date);
+//    @Query("SELECT SUM(v.groupMembers) FROM Visitor v WHERE DATE(v.time) = :date")
+//    Integer sumGroupMembersByDate(@Param("date") LocalDate date);
 
     @Query("SELECT SUM(v.groupMembers) FROM Visitor v WHERE DAYOFWEEK(v.time) = :dayOfWeek")
     Integer sumGroupMembersByDayOfWeek(@Param("dayOfWeek") int dayOfWeek);
