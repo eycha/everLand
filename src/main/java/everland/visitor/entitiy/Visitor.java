@@ -1,10 +1,6 @@
 package everland.visitor.entitiy;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.MetaValue;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Getter @Setter
 @Table(name = "visitors")
 @EntityListeners(AuditingEntityListener.class)
 public class Visitor {
@@ -23,10 +18,15 @@ public class Visitor {
     private Integer id;
     private String groupName;
     private int groupMembers;
-    @Comment("날짜")
-    @CreatedDate
+//    @CreatedDate
     private LocalDateTime time;
 
+    @PrePersist
+    public void prePersist() {
+        if (time == null) {
+            time = LocalDateTime.now();
 
 
+        }
+    }
 }
