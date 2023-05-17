@@ -61,7 +61,7 @@ public class VisitorCalServiceImpl implements VisitorCalService{
     @Override
     public Integer sumGroupMembersByDateAndHour(LocalDate date, int hour) {
         LocalDateTime startDateTime = date.atTime(hour, 0);
-        LocalDateTime endDateTime = date.atTime(hour, 59, 59);
+        LocalDateTime endDateTime = date.atTime(hour, 59, 59, 999999);
         List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
         return visitors.stream()
                 .mapToInt(Visitor::getGroupMembers)
@@ -71,7 +71,7 @@ public class VisitorCalServiceImpl implements VisitorCalService{
     @Override
     public Integer sumGroupMembersByDate(LocalDate date) {
         LocalDateTime startDateTime = date.atTime(0, 0, 0);
-        LocalDateTime endDateTime = date.atTime(23, 59, 59);
+        LocalDateTime endDateTime = date.atTime(23, 59, 59, 999999);
         List<Visitor> visitors = visitorRepository.findByTimeBetween(startDateTime, endDateTime);
         return visitors.stream()
                 .mapToInt(Visitor::getGroupMembers)
